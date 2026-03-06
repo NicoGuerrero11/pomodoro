@@ -79,12 +79,15 @@ final class TaskRepository: TaskRepositoryType {
     func fetchPending() throws -> [TaskItem] {
         let context = ModelContext(container)
         let descriptor = FetchDescriptor<TaskRecord>(
-            predicate: #Predicate<TaskRecord> { $0.isCompleted == false }
+            predicate: #Predicate<TaskRecord> { $0.isCompleted == false },
+            sortBy: [
+                SortDescriptor(\TaskRecord.prioritySortOrder, order: .reverse),
+                SortDescriptor(\TaskRecord.createdAt),
+                SortDescriptor(\TaskRecord.id)
+            ]
         )
 
-        return try context.fetch(descriptor)
-            .map(Self.mapTask)
-            .sorted(by: Self.areInPendingDisplayOrder)
+        return try context.fetch(descriptor).map(Self.mapTask)
     }
 
     func fetchCompleted() throws -> [CompletedTask] {
@@ -134,20 +137,9 @@ final class TaskRepository: TaskRepositoryType {
         record.title = task.title
         record.notes = task.notes
         record.priorityRawValue = task.priority.rawValue
+        record.prioritySortOrder = task.priority.sortOrder
         record.createdAt = task.createdAt
         record.isCompleted = task.isCompleted
         record.completedAt = task.completedAt
-    }
-
-    private static func areInPendingDisplayOrder(_ lhs: TaskItem, _ rhs: TaskItem) -> Bool {
-        if lhs.priority.sortOrder != rhs.priority.sortOrder {
-            return lhs.priority.sortOrder > rhs.priority.sortOrder
-        }
-
-        if lhs.createdAt != rhs.createdAt {
-            return lhs.createdAt < rhs.createdAt
-        }
-
-        return lhs.id.uuidString < rhs.id.uuidString
     }
 }
