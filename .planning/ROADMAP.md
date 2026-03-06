@@ -13,7 +13,7 @@ Pomodoro Mac reaches v1 by establishing a native macOS shell and local data back
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: App Shell and Local Data Backbone** - Establish the native macOS structure, offline-first persistence, and primary navigation.
-- [ ] **Phase 2: Task Capture and Prioritization** - Deliver basic task creation, editing, and priority-driven ordering.
+- [x] **Phase 2: Task Capture and Prioritization** - Deliver basic task creation, editing, and priority-driven ordering.
 - [ ] **Phase 3: Core Focus Timer** - Build the main timer experience with start, pause, reset, and no-task operation.
 - [ ] **Phase 4: Cycle Rules and Timing Preferences** - Enforce the fixed Pomodoro sequence and expose allowed timing controls.
 - [ ] **Phase 5: Native Alerts and Menu Bar** - Add macOS notifications, sounds, menu bar controls, and appearance support.
@@ -52,7 +52,7 @@ Plans:
 
 Plans:
 - [x] 02-01: Build task data models, validation rules, and CRUD flows.
-- [ ] 02-02: Ship the tasks list and editor UI with priority-first sorting behavior.
+- [x] 02-02: Ship the tasks list and editor UI with priority-first sorting behavior.
 
 ### Phase 3: Core Focus Timer
 **Goal**: Deliver the main focus-session experience with reliable control actions and a clean active timer surface.
@@ -169,7 +169,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. App Shell and Local Data Backbone | 3/3 | Complete | 2026-03-06 |
-| 2. Task Capture and Prioritization | 1/2 | In progress | - |
+| 2. Task Capture and Prioritization | 2/2 | Complete | 2026-03-06 |
 | 3. Core Focus Timer | 0/3 | Not started | - |
 | 4. Cycle Rules and Timing Preferences | 0/2 | Not started | - |
 | 5. Native Alerts and Menu Bar | 0/2 | Not started | - |
