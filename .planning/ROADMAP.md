@@ -12,7 +12,7 @@ Pomodoro Mac reaches v1 by establishing a native macOS shell and local data back
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: App Shell and Local Data Backbone** - Establish the native macOS structure, offline-first persistence, and primary navigation.
+- [x] **Phase 1: App Shell and Local Data Backbone** - Establish the native macOS structure, offline-first persistence, and primary navigation.
 - [ ] **Phase 2: Task Capture and Prioritization** - Deliver basic task creation, editing, and priority-driven ordering.
 - [ ] **Phase 3: Core Focus Timer** - Build the main timer experience with start, pause, reset, and no-task operation.
 - [ ] **Phase 4: Cycle Rules and Timing Preferences** - Enforce the fixed Pomodoro sequence and expose allowed timing controls.
@@ -36,9 +36,9 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 3 plans
 
 Plans:
-- [ ] 01-01: Create the app scene structure, sidebar shell, and initial dashboard entry flow.
-- [ ] 01-02: Define the local persistence container, repositories, and settings storage boundaries.
-- [ ] 01-03: Implement offline-safe bootstrapping, seed states, and relaunch recovery foundations.
+- [x] 01-01: Create the app scene structure, sidebar shell, and initial dashboard entry flow.
+- [x] 01-02: Define the local persistence container, repositories, and settings storage boundaries.
+- [x] 01-03: Implement offline-safe bootstrapping, seed states, and relaunch recovery foundations.
 
 ### Phase 2: Task Capture and Prioritization
 **Goal**: Give the user a usable task list with editable task details and priority-based ordering before task-session linkage begins.
@@ -168,7 +168,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. App Shell and Local Data Backbone | 0/3 | Not started | - |
+| 1. App Shell and Local Data Backbone | 3/3 | Complete | 2026-03-06 |
 | 2. Task Capture and Prioritization | 0/2 | Not started | - |
 | 3. Core Focus Timer | 0/3 | Not started | - |
 | 4. Cycle Rules and Timing Preferences | 0/2 | Not started | - |
