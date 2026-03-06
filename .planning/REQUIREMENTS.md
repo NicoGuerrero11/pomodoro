@@ -90,12 +90,56 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
+| TIME-01 | Phase 3: Core Focus Timer | Planned |
+| TIME-02 | Phase 3: Core Focus Timer | Planned |
+| TIME-03 | Phase 3: Core Focus Timer | Planned |
+| TIME-04 | Phase 4: Cycle Rules and Timing Preferences | Planned |
+| TIME-05 | Phase 4: Cycle Rules and Timing Preferences | Planned |
+| TIME-06 | Phase 4: Cycle Rules and Timing Preferences | Planned |
+| TIME-07 | Phase 3: Core Focus Timer | Planned |
+| NOTF-01 | Phase 5: Native Alerts and Menu Bar | Planned |
+| NOTF-02 | Phase 5: Native Alerts and Menu Bar | Planned |
+| NOTF-03 | Phase 5: Native Alerts and Menu Bar | Planned |
+| NOTF-04 | Phase 5: Native Alerts and Menu Bar | Planned |
+| TASK-01 | Phase 2: Task Capture and Prioritization | Planned |
+| TASK-02 | Phase 2: Task Capture and Prioritization | Planned |
+| TASK-03 | Phase 2: Task Capture and Prioritization | Planned |
+| TASK-04 | Phase 8: History and Task Outcomes | Planned |
+| TASK-05 | Phase 6: Session Linking and Task Progress | Planned |
+| TASK-06 | Phase 6: Session Linking and Task Progress | Planned |
+| DASH-01 | Phase 1: App Shell and Local Data Backbone | Planned |
+| DASH-02 | Phase 7: Dashboard Core Metrics | Planned |
+| DASH-03 | Phase 7: Dashboard Core Metrics | Planned |
+| DASH-04 | Phase 7: Dashboard Core Metrics | Planned |
+| DASH-05 | Phase 7: Dashboard Core Metrics | Planned |
+| DASH-06 | Phase 9: Productivity Patterns and Extended Filters | Planned |
+| HIST-01 | Phase 8: History and Task Outcomes | Planned |
+| HIST-02 | Phase 8: History and Task Outcomes | Planned |
+| HIST-03 | Phase 8: History and Task Outcomes | Planned |
+| HIST-04 | Phase 9: Productivity Patterns and Extended Filters | Planned |
+| HIST-05 | Phase 9: Productivity Patterns and Extended Filters | Planned |
+| CONF-01 | Phase 4: Cycle Rules and Timing Preferences | Planned |
+| CONF-02 | Phase 4: Cycle Rules and Timing Preferences | Planned |
+| CONF-03 | Phase 1: App Shell and Local Data Backbone | Planned |
+| CONF-04 | Phase 1: App Shell and Local Data Backbone | Planned |
+| CONF-05 | Phase 1: App Shell and Local Data Backbone | Planned |
+| CONF-06 | Phase 5: Native Alerts and Menu Bar | Planned |
+| CONF-07 | Phase 3: Core Focus Timer | Planned |
 
 **Coverage:**
 - v1 requirements: 35 total
-- Mapped to phases: 0
-- Unmapped: 35 ⚠️
+- Mapped to phases: 35
+- Unmapped: 0
+- Phase 1 requirements: 4
+- Phase 2 requirements: 3
+- Phase 3 requirements: 5
+- Phase 4 requirements: 5
+- Phase 5 requirements: 5
+- Phase 6 requirements: 2
+- Phase 7 requirements: 4
+- Phase 8 requirements: 4
+- Phase 9 requirements: 3
 
 ---
 *Requirements defined: 2026-03-06*
-*Last updated: 2026-03-06 after initial definition*
+*Last updated: 2026-03-06 after roadmap creation*
