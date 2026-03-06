@@ -3,6 +3,7 @@ import SwiftUI
 struct DashboardView: View {
     let snapshot: DashboardSnapshot
     let activeSessionSnapshot: ActiveSessionSnapshot?
+    var onCreateFirstTask: () -> Void = {}
 
     private let checklistItems = [
         "Create your first task",
@@ -71,7 +72,7 @@ struct DashboardView: View {
                 .foregroundStyle(.secondary)
 
             if snapshot.taskCount == 0 {
-                Button("Create First Task") {}
+                Button("Create First Task", action: onCreateFirstTask)
                     .buttonStyle(.borderedProminent)
                     .controlSize(.large)
             } else {
