@@ -1,10 +1,18 @@
 import Foundation
 import SwiftData
 
+enum TaskRepositoryError: Error, Equatable, Sendable {
+    case taskNotFound(UUID)
+}
+
 @MainActor
 protocol TaskRepositoryType: Sendable {
+    func makeDraft() -> TaskDraft
+    func createTask(from draft: TaskDraft) throws -> TaskItem
+    func updateTask(id: UUID, with draft: TaskDraft) throws -> TaskItem
     func save(_ task: TaskItem) throws
     func fetchAll() throws -> [TaskItem]
+    func fetchPending() throws -> [TaskItem]
     func fetchCompleted() throws -> [CompletedTask]
     func markCompleted(taskID: UUID, completedAt: Date) throws
 }
@@ -17,23 +25,42 @@ final class TaskRepository: TaskRepositoryType {
         self.container = container
     }
 
-    func save(_ task: TaskItem) throws {
+    func makeDraft() -> TaskDraft {
+        TaskDraft()
+    }
+
+    func createTask(from draft: TaskDraft) throws -> TaskItem {
+        let task = try TaskItem(draft: draft)
+        try save(task)
+        return task
+    }
+
+    func updateTask(id: UUID, with draft: TaskDraft) throws -> TaskItem {
         let context = ModelContext(container)
-        if let existing = try fetchTaskRecord(id: task.id, in: context) {
-            existing.title = task.title
-            existing.notes = task.notes
-            existing.priorityRawValue = task.priority.rawValue
-            existing.isCompleted = task.isCompleted
-            existing.completedAt = task.completedAt
+        guard let existing = try fetchTaskRecord(id: id, in: context) else {
+            throw TaskRepositoryError.taskNotFound(id)
+        }
+
+        let updatedTask = try Self.mapTask(existing).updating(with: draft)
+        Self.apply(updatedTask, to: existing)
+        try context.save()
+        return updatedTask
+    }
+
+    func save(_ task: TaskItem) throws {
+        let validatedTask = try task.validated()
+        let context = ModelContext(container)
+        if let existing = try fetchTaskRecord(id: validatedTask.id, in: context) {
+            Self.apply(validatedTask, to: existing)
         } else {
             let record = TaskRecord(
-                id: task.id,
-                title: task.title,
-                notes: task.notes,
-                priorityRawValue: task.priority.rawValue,
-                createdAt: task.createdAt,
-                isCompleted: task.isCompleted,
-                completedAt: task.completedAt
+                id: validatedTask.id,
+                title: validatedTask.title,
+                notes: validatedTask.notes,
+                priorityRawValue: validatedTask.priority.rawValue,
+                createdAt: validatedTask.createdAt,
+                isCompleted: validatedTask.isCompleted,
+                completedAt: validatedTask.completedAt
             )
             context.insert(record)
         }
@@ -47,6 +74,17 @@ final class TaskRepository: TaskRepositoryType {
             sortBy: [SortDescriptor(\TaskRecord.createdAt)]
         )
         return try context.fetch(descriptor).map(Self.mapTask)
+    }
+
+    func fetchPending() throws -> [TaskItem] {
+        let context = ModelContext(container)
+        let descriptor = FetchDescriptor<TaskRecord>(
+            predicate: #Predicate<TaskRecord> { $0.isCompleted == false }
+        )
+
+        return try context.fetch(descriptor)
+            .map(Self.mapTask)
+            .sorted(by: Self.areInPendingDisplayOrder)
     }
 
     func fetchCompleted() throws -> [CompletedTask] {
@@ -90,5 +128,26 @@ final class TaskRepository: TaskRepositoryType {
             createdAt: record.createdAt,
             completedAt: record.completedAt
         )
+    }
+
+    private static func apply(_ task: TaskItem, to record: TaskRecord) {
+        record.title = task.title
+        record.notes = task.notes
+        record.priorityRawValue = task.priority.rawValue
+        record.createdAt = task.createdAt
+        record.isCompleted = task.isCompleted
+        record.completedAt = task.completedAt
+    }
+
+    private static func areInPendingDisplayOrder(_ lhs: TaskItem, _ rhs: TaskItem) -> Bool {
+        if lhs.priority.sortOrder != rhs.priority.sortOrder {
+            return lhs.priority.sortOrder > rhs.priority.sortOrder
+        }
+
+        if lhs.createdAt != rhs.createdAt {
+            return lhs.createdAt < rhs.createdAt
+        }
+
+        return lhs.id.uuidString < rhs.id.uuidString
     }
 }
