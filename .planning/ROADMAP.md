@@ -51,7 +51,7 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 02-01: Build task data models, validation rules, and CRUD flows.
+- [x] 02-01: Build task data models, validation rules, and CRUD flows.
 - [ ] 02-02: Ship the tasks list and editor UI with priority-first sorting behavior.
 
 ### Phase 3: Core Focus Timer
@@ -169,7 +169,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. App Shell and Local Data Backbone | 3/3 | Complete | 2026-03-06 |
-| 2. Task Capture and Prioritization | 0/2 | Not started | - |
+| 2. Task Capture and Prioritization | 1/2 | In progress | - |
 | 3. Core Focus Timer | 0/3 | Not started | - |
 | 4. Cycle Rules and Timing Preferences | 0/2 | Not started | - |
 | 5. Native Alerts and Menu Bar | 0/2 | Not started | - |

@@ -24,9 +24,9 @@
 
 ### Tasks
 
-- [ ] **TASK-01**: User can create a task with title, description, and priority.
-- [ ] **TASK-02**: User can edit a task’s title, description, and priority after creation.
-- [ ] **TASK-03**: User can view tasks ordered so higher-priority pending tasks appear before lower-priority tasks.
+- [x] **TASK-01**: User can create a task with title, description, and priority.
+- [x] **TASK-02**: User can edit a task’s title, description, and priority after creation.
+- [x] **TASK-03**: User can view tasks ordered so higher-priority pending tasks appear before lower-priority tasks.
 - [ ] **TASK-04**: User can mark a task as completed and the completion is reflected in metrics and history.
 - [ ] **TASK-05**: User can associate zero, one, or multiple tasks to a focus session before starting it.
 - [ ] **TASK-06**: User can view accumulated focus time and completed Pomodoro count for each task.
@@ -101,9 +101,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | NOTF-02 | Phase 5: Native Alerts and Menu Bar | Planned |
 | NOTF-03 | Phase 5: Native Alerts and Menu Bar | Planned |
 | NOTF-04 | Phase 5: Native Alerts and Menu Bar | Planned |
-| TASK-01 | Phase 2: Task Capture and Prioritization | Planned |
-| TASK-02 | Phase 2: Task Capture and Prioritization | Planned |
-| TASK-03 | Phase 2: Task Capture and Prioritization | Planned |
+| TASK-01 | Phase 2: Task Capture and Prioritization | Completed |
+| TASK-02 | Phase 2: Task Capture and Prioritization | Completed |
+| TASK-03 | Phase 2: Task Capture and Prioritization | Completed |
 | TASK-04 | Phase 8: History and Task Outcomes | Planned |
 | TASK-05 | Phase 6: Session Linking and Task Progress | Planned |
 | TASK-06 | Phase 6: Session Linking and Task Progress | Planned |
