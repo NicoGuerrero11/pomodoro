@@ -2,6 +2,7 @@ import SwiftUI
 
 struct AppShellView: View {
     @Bindable var router: AppRouter
+    var environment: AppEnvironment? = nil
 
     var body: some View {
         NavigationSplitView {
@@ -22,7 +23,10 @@ struct AppShellView: View {
     private func detailView(for section: AppSection) -> some View {
         switch section {
         case .dashboard:
-            DashboardView()
+            DashboardView(
+                snapshot: environment?.initialDashboardSnapshot ?? .empty,
+                activeSessionSnapshot: environment?.activeSessionSnapshot
+            )
         case .timer, .tasks, .statistics, .history, .settings:
             SectionPlaceholderView(section: section)
         }
@@ -30,5 +34,5 @@ struct AppShellView: View {
 }
 
 #Preview {
-    AppShellView(router: AppRouter())
+    AppShellView(router: AppRouter(), environment: nil)
 }

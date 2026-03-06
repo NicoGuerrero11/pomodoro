@@ -5,6 +5,12 @@ struct DashboardSnapshot: Equatable, Sendable {
     var taskCount: Int
     var completedTaskCount: Int
     var sessionCount: Int
+
+    static let empty = DashboardSnapshot(
+        taskCount: 0,
+        completedTaskCount: 0,
+        sessionCount: 0
+    )
 }
 
 @MainActor

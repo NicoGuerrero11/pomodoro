@@ -1,6 +1,9 @@
 import SwiftUI
 
 struct DashboardView: View {
+    let snapshot: DashboardSnapshot
+    let activeSessionSnapshot: ActiveSessionSnapshot?
+
     private let checklistItems = [
         "Create your first task",
         "Start your first focus session",
@@ -12,6 +15,10 @@ struct DashboardView: View {
             VStack(alignment: .leading, spacing: 24) {
                 heroCard
 
+                if let activeSessionSnapshot {
+                    recoveryCard(snapshot: activeSessionSnapshot)
+                }
+
                 LazyVGrid(
                     columns: [
                         GridItem(.flexible(minimum: 220), spacing: 16),
@@ -19,25 +26,33 @@ struct DashboardView: View {
                     ],
                     spacing: 16
                 ) {
-                    emptyMetricCard(
-                        title: "Today",
-                        value: "0 sessions",
-                        detail: "No focus sessions recorded yet."
+                    metricCard(
+                        title: "Tasks",
+                        value: "\(snapshot.taskCount)",
+                        detail: snapshot.taskCount == 0
+                            ? "No tasks saved yet."
+                            : "\(snapshot.taskCount) task\(snapshot.taskCount == 1 ? "" : "s") stored locally."
                     )
-                    emptyMetricCard(
-                        title: "Focus time",
-                        value: "0 min",
-                        detail: "Time appears here after your first real session."
-                    )
-                    emptyMetricCard(
+                    metricCard(
                         title: "Completed tasks",
-                        value: "0",
-                        detail: "Finished work will show up here once tasks exist."
+                        value: "\(snapshot.completedTaskCount)",
+                        detail: snapshot.completedTaskCount == 0
+                            ? "Finished work appears here once you complete a task."
+                            : "\(snapshot.completedTaskCount) completed task\(snapshot.completedTaskCount == 1 ? "" : "s") are persisted."
                     )
-                    emptyMetricCard(
-                        title: "Recent pattern",
-                        value: "No pattern yet",
-                        detail: "Productivity trends show up only after real usage."
+                    metricCard(
+                        title: "Sessions logged",
+                        value: "\(snapshot.sessionCount)",
+                        detail: snapshot.sessionCount == 0
+                            ? "No focus sessions recorded yet."
+                            : "\(snapshot.sessionCount) session\(snapshot.sessionCount == 1 ? "" : "s") survived the latest launch."
+                    )
+                    metricCard(
+                        title: "Relaunch status",
+                        value: activeSessionSnapshot == nil ? "Clean launch" : "Snapshot found",
+                        detail: activeSessionSnapshot == nil
+                            ? "No unfinished session needed recovery on startup."
+                            : "An unfinished session snapshot is ready for a later recovery UI."
                     )
                 }
             }
@@ -51,13 +66,19 @@ struct DashboardView: View {
             Text("Ready for your next focus block")
                 .font(.system(size: 28, weight: .semibold))
 
-            Text("Start with one task, then let the app grow into real history and patterns as you use it.")
+            Text("Start with one task, then let the app grow into real history and patterns as local data accumulates on this Mac.")
                 .font(.body)
                 .foregroundStyle(.secondary)
 
-            Button("Create First Task") {}
-                .buttonStyle(.borderedProminent)
-                .controlSize(.large)
+            if snapshot.taskCount == 0 {
+                Button("Create First Task") {}
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.large)
+            } else {
+                Label("Local data loaded successfully", systemImage: "externaldrive.badge.checkmark")
+                    .font(.subheadline.weight(.medium))
+                    .foregroundStyle(.secondary)
+            }
 
             Divider()
 
@@ -97,7 +118,29 @@ struct DashboardView: View {
         )
     }
 
-    private func emptyMetricCard(title: String, value: String, detail: String) -> some View {
+    private func recoveryCard(snapshot: ActiveSessionSnapshot) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Relaunch foundation is active")
+                .font(.headline)
+            Text("\(phaseLabel(for: snapshot.phase)) session snapshot found")
+                .font(.title3.weight(.semibold))
+            Text("Recovery UI ships in a later phase, but the unfinished session state is already being preserved across launches.")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+        }
+        .padding(20)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .fill(Color(red: 0.95, green: 0.97, blue: 0.92))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .stroke(Color.black.opacity(0.05), lineWidth: 1)
+        )
+    }
+
+    private func metricCard(title: String, value: String, detail: String) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(title)
                 .font(.headline)
@@ -118,8 +161,19 @@ struct DashboardView: View {
                 .stroke(Color.black.opacity(0.05), lineWidth: 1)
         )
     }
+
+    private func phaseLabel(for phase: ActiveSessionPhase) -> String {
+        switch phase {
+        case .focus:
+            "Focus"
+        case .shortBreak:
+            "Short break"
+        case .longBreak:
+            "Long break"
+        }
+    }
 }
 
 #Preview {
-    DashboardView()
+    DashboardView(snapshot: .empty, activeSessionSnapshot: nil)
 }
