@@ -7,13 +7,24 @@ struct TasksWorkspaceView: View {
         Group {
             if model.showsFocusedEmptyState {
                 emptyState
+            } else if model.hasTasks {
+                workspaceSplitView
             } else {
-                editorSurface
+                TaskEditorPaneView(model: model)
             }
         }
         .navigationTitle("Tasks")
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(nsColor: .windowBackgroundColor))
+        .toolbar {
+            if model.hasTasks {
+                Button {
+                    model.beginCreatingTask()
+                } label: {
+                    Label("New Task", systemImage: "plus")
+                }
+            }
+        }
     }
 
     private var emptyState: some View {
@@ -35,86 +46,10 @@ struct TasksWorkspaceView: View {
         .padding(32)
     }
 
-    private var editorSurface: some View {
-        VStack(alignment: .leading, spacing: 18) {
-            Text(model.editorTitle)
-                .font(.title2.weight(.semibold))
-
-            if let errorMessage = model.errorMessage {
-                Text(errorMessage)
-                    .foregroundStyle(.red)
-            }
-
-            VStack(alignment: .leading, spacing: 10) {
-                Text("Title")
-                    .font(.headline)
-                TextField("Task title", text: titleBinding)
-            }
-
-            VStack(alignment: .leading, spacing: 10) {
-                Text("Priority")
-                    .font(.headline)
-                Picker("Priority", selection: priorityBinding) {
-                    Text("Low").tag(TaskPriority.low)
-                    Text("Medium").tag(TaskPriority.medium)
-                    Text("High").tag(TaskPriority.high)
-                }
-                .pickerStyle(.segmented)
-            }
-
-            VStack(alignment: .leading, spacing: 10) {
-                Text("Description")
-                    .font(.headline)
-                TextEditor(text: notesBinding)
-                    .frame(minHeight: 180)
-                    .padding(8)
-                    .background(
-                        RoundedRectangle(cornerRadius: 12, style: .continuous)
-                            .fill(Color(nsColor: .controlBackgroundColor))
-                    )
-            }
-
-            if let validationMessage = model.validationMessage {
-                Text(validationMessage)
-                    .foregroundStyle(.red)
-            }
-
-            HStack {
-                Spacer()
-
-                Button("Cancel") {
-                    model.cancelEditing()
-                }
-
-                Button(model.saveButtonTitle) {
-                    model.saveCurrentTask()
-                }
-                .buttonStyle(.borderedProminent)
-            }
+    private var workspaceSplitView: some View {
+        HSplitView {
+            TaskListPaneView(model: model)
+            TaskEditorPaneView(model: model)
         }
-        .padding(24)
-    }
-}
-
-private extension TasksWorkspaceView {
-    var titleBinding: Binding<String> {
-        Binding(
-            get: { model.draft.title },
-            set: { model.updateTitle($0) }
-        )
-    }
-
-    var notesBinding: Binding<String> {
-        Binding(
-            get: { model.draft.notes },
-            set: { model.updateNotes($0) }
-        )
-    }
-
-    var priorityBinding: Binding<TaskPriority> {
-        Binding(
-            get: { model.draft.priority },
-            set: { model.updatePriority($0) }
-        )
     }
 }

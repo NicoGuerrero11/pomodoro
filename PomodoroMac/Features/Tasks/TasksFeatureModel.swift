@@ -54,6 +54,10 @@ final class TasksFeatureModel {
         return tasks.first(where: { $0.id == selectedTaskID })
     }
 
+    var isPresentingEditor: Bool {
+        isCreatingTask || isEditingTask
+    }
+
     var showsFocusedEmptyState: Bool {
         tasks.isEmpty && editorState == .empty
     }
